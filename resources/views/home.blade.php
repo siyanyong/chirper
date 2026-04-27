@@ -1,7 +1,9 @@
 <x-layout>
     @if ($errors->any())
-        {{ dd($errors->all()) }}
-        {{-- "dump and die", print all contents and stop all execution --}}
+        @dump($errors->all())
+        {{-- "dump and die", dd(), print all contents and stop all execution --}}
+        {{-- Better to use just "dump" so that Laravel can clear the error flash data --}}
+        {{-- Use the @dump directive NOT the function --}}
     @endif
     <x-slot:title>
         Home Feed
