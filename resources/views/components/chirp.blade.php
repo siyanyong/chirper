@@ -28,6 +28,24 @@
                     <span class="text-sm text-base-content/60">{{ $chirp->created_at->diffForHumans() }}</span>
                 </div>
 
+                <div class="flex gap-1">
+                    <a href="/chirps/{{ $chirp->id }}/edit" class="btn btn-ghost btn-xs">
+                        Edit
+                    </a>
+                    <form method="POST" action="/chirps/{{ $chirp->id }}">
+                        @csrf
+                        @method('DELETE')
+                        {{-- HTTP method spoofing since only GET and POST allowed --}}
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this chirp?')"
+                            class="btn btn-ghost btn-xs text-error">
+                            Delete
+                        </button>
+                        {{-- client-side! confirm() is JS --}}
+                        {{-- the browser secretly wraps that string in a function--}}
+                        {{-- false means that form is not submitted --}}
+                    </form>
+                </div>
+
                 <p class="mt-1">
                     {{ $chirp->message }}
                 </p>
