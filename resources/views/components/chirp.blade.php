@@ -2,6 +2,7 @@
 
 <div class="card bg-base-100 shadow">
     <div class="card-body">
+        {{-- Flex for avatar and content --}}
         <div class="flex space-x-3">
             @if ($chirp->user)
                 {{-- if user exists --}}
@@ -21,29 +22,34 @@
                 </div>
             @endif
             {{-- What we had previously:  --}}
-            <div class="min-w-0">
-                <div class="flex items-center gap-1">
-                    <span class="text-sm font-semibold">{{ $chirp->user ? $chirp->user->name : 'Anonymous' }}</span>
-                    <span class="text-base-content/60">·</span>
-                    <span class="text-sm text-base-content/60">{{ $chirp->created_at->diffForHumans() }}</span>
-                </div>
-
-                <div class="flex gap-1">
-                    <a href="/chirps/{{ $chirp->id }}/edit" class="btn btn-ghost btn-xs">
-                        Edit
-                    </a>
-                    <form method="POST" action="/chirps/{{ $chirp->id }}">
-                        @csrf
-                        @method('DELETE')
-                        {{-- HTTP method spoofing since only GET and POST allowed --}}
-                        <button type="submit" onclick="return confirm('Are you sure you want to delete this chirp?')"
-                            class="btn btn-ghost btn-xs text-error">
-                            Delete
-                        </button>
-                        {{-- client-side! confirm() is JS --}}
-                        {{-- the browser secretly wraps that string in a function--}}
-                        {{-- false means that form is not submitted --}}
-                    </form>
+            <div class="min-w-0 flex-1">
+                {{-- Flex for name/time and action buttons --}}
+                <div class="flex justify-between w-full">
+                    {{-- Flex for name and time --}}
+                    <div class="flex items-center gap-1">
+                        <span class="text-sm font-semibold">{{ $chirp->user ? $chirp->user->name : 'Anonymous' }}</span>
+                        <span class="text-base-content/60">·</span>
+                        <span class="text-sm text-base-content/60">{{ $chirp->created_at->diffForHumans() }}</span>
+                    </div>
+                    {{-- Flex for action buttons --}}
+                    <div class="flex gap-1">
+                        <a href="/chirps/{{ $chirp->id }}/edit" class="btn btn-ghost btn-xs">
+                            Edit
+                        </a>
+                        <form method="POST" action="/chirps/{{ $chirp->id }}">
+                            @csrf
+                            @method('DELETE')
+                            {{-- HTTP method spoofing since only GET and POST allowed --}}
+                            <button type="submit"
+                                onclick="return confirm('Are you sure you want to delete this chirp?')"
+                                class="btn btn-ghost btn-xs text-error">
+                                Delete
+                            </button>
+                            {{-- client-side! confirm() is JS --}}
+                            {{-- the browser secretly wraps that string in a function --}}
+                            {{-- false means that form is not submitted --}}
+                        </form>
+                    </div>
                 </div>
 
                 <p class="mt-1">
