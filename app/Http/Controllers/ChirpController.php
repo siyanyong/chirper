@@ -96,8 +96,10 @@ class ChirpController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Chirp $chirp)
     {
-        //
+        $chirp->delete();
+
+        return redirect('/')->with('success', 'Your chirp has been deleted!');
     }
 }
