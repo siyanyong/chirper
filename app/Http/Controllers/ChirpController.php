@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Chirp;
 use Illuminate\Http\Request;
 
+// use Illuminate\Support\Facades\Gate;
+
 class ChirpController extends Controller
 {
     /**
@@ -78,6 +80,14 @@ class ChirpController extends Controller
      */
     public function update(Request $request, Chirp $chirp)
     {
+        // Authorize
+        // can be explicit with:
+        // if ($request->user()->cannot('update', $chirp)) {
+        //     abort(403);
+        // }
+        // or
+        // $this->authorize('update', $chirp);
+
         // Same thing as create - validate and update
         // Validate the request
         $validated = $request->validate([
@@ -98,6 +108,13 @@ class ChirpController extends Controller
      */
     public function destroy(Chirp $chirp)
     {
+        // Add authorization check with ChirpPolicy
+        // Laravel takes the type of $chirp and finds the associated policy and calls the delete method
+        // Have to explicitly add use AuthorizesRequests; to base controller to use authorize()
+        // $this->authorize('delete', $chirp);
+        // or use Gate checks:
+        // Gate::authorize('delete', $chirp);
+
         $chirp->delete();
 
         return redirect('/')->with('success', 'Your chirp has been deleted!');

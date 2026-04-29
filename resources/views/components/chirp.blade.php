@@ -31,6 +31,7 @@
                         <span class="text-base-content/60">·</span>
                         <span class="text-sm text-base-content/60">{{ $chirp->created_at->diffForHumans() }}</span>
                     </div>
+                    
                     {{-- Flex for action buttons --}}
                     <div class="flex gap-1">
                         <a href="/chirps/{{ $chirp->id }}/edit" class="btn btn-ghost btn-xs">
