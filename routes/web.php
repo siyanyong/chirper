@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\Logout;
 use App\Http\Controllers\Auth\Register;
 use App\Http\Controllers\ChirpController;
 use Illuminate\Support\Facades\Route;
@@ -21,3 +22,7 @@ Route::view('/register', 'auth.register') // GET
 
 Route::post('/register', Register::class)
     ->middleware('guest');
+
+// LOGOUT - only someone who is authenticated can hit this endpoint
+Route::post('/logout', Logout::class)
+    ->middleware('auth');
