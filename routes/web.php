@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\Register;
 use App\Http\Controllers\ChirpController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,4 +14,10 @@ Route::delete('/chirps/{chirp}', [ChirpController::class, 'destroy']);
 // Route::resource('/chirps', ChirpController::class)
 //     -> only(['store','edit','update','destroy']);
 
-Route::view('/register', 'auth.register');
+// REGISTER ROUTES
+Route::view('/register', 'auth.register') // GET
+    ->middleware('guest')
+    ->name('register');
+
+Route::post('/register', Register::class)
+    ->middleware('guest');
