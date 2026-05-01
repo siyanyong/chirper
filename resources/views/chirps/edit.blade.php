@@ -6,7 +6,7 @@
     <div class="max-w-2xl mx-auto">
         <h1 class="text-3xl font-bold mt-8">Edit Chirp</h1>
 
-        <div class="card bg-base-100 shadow mt-8">
+        <div class="card bg-base-100 mt-8">
             <div class="card-body">
                 <form method="POST" action="/chirps/{{ $chirp->id }}">
                     {{-- Depends on $chirp passed in from controller --}}
@@ -16,7 +16,7 @@
                     <div class="form-control w-full">
                         <textarea name="message" class="textarea textarea-bordered w-full resize-none @error('message') textarea-error @enderror"
                             rows="4" maxlength="255" required>{{ old('message', $chirp->message) }}</textarea>
-                            {{-- first arg, look in session flash data; second arg, fallback value if nothing exists in session --}}
+                        {{-- first arg, look in session flash data; second arg, fallback value if nothing exists in session --}}
 
                         @error('message')
                             <div class="label">
