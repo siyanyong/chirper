@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chirp;
+use Auth;
 use Illuminate\Http\Request;
 
 // use Illuminate\Support\Facades\Gate;
@@ -50,10 +51,14 @@ class ChirpController extends Controller
         ]);
 
         // Create the chirp (no user for now - we'll add auth later)
-        Chirp::create([
-            'message' => $validated['message'],
-            'user_id' => null, // We'll add authentication in lesson 11
-        ]);
+        // Chirp::create([
+        //     'message' => $validated['message'],
+        //     'user_id' => null, // We'll add authentication in lesson 11
+        // ]);
+
+        // global auth helper function
+        // auth()->user()->chirps()->create($validated); // annoying red line at user()
+        Auth::user()->chirps()->create($validated);
 
         // Redirect back to the feed
         return redirect('/')->with('success', 'Your chirp has been posted!');
@@ -72,6 +77,8 @@ class ChirpController extends Controller
      */
     public function edit(Chirp $chirp)
     {
+        $this->authorize('update', $chirp);
+
         return view('chirps.edit', compact('chirp'));
     }
 
@@ -86,7 +93,7 @@ class ChirpController extends Controller
         //     abort(403);
         // }
         // or
-        // $this->authorize('update', $chirp);
+        $this->authorize('update', $chirp);
 
         // Same thing as create - validate and update
         // Validate the request
@@ -114,6 +121,7 @@ class ChirpController extends Controller
         // $this->authorize('delete', $chirp);
         // or use Gate checks:
         // Gate::authorize('delete', $chirp);
+        $this->authorize('delete', $chirp);
 
         $chirp->delete();
 
