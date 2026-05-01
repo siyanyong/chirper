@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Logout;
 use App\Http\Controllers\Auth\Register;
 use App\Http\Controllers\ChirpController;
@@ -30,4 +31,13 @@ Route::post('/register', Register::class)
 
 // LOGOUT - only someone who is authenticated can hit this endpoint
 Route::post('/logout', Logout::class)
-    ->middleware('auth');
+    ->middleware('auth')
+    ->name('logout');
+
+// LOGIN
+Route::view('/login', 'auth.login')
+    ->middleware('guest')
+    ->name('login');
+
+Route::post('login', Login::class)
+    ->middleware('guest');
